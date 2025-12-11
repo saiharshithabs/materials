@@ -2,23 +2,27 @@ name: SonarCloud Scan
 
 on:
   push:
+    branches:
+      - master
   pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   sonarcloud:
-    name: SonarCloud Scan
+    name: Run SonarCloud Scan
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0   # required for better analysis
 
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          distribution: 'adopt'
-          java-version: '11'
+          distribution: 'temurin'
+          java-version: '17'
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
@@ -27,5 +31,4 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=saiharshithabs_materials
-            -Dsonar.organization=saiharshithabs 
- 
+            -Dsonar.organization=saiharshithabs

@@ -33,7 +33,12 @@ jobs:
             -Dsonar.projectKey=saiharshithabs_materials
             -Dsonar.organization=saiharshithabs
             -Dsonar.exclusions=**/*.java
-            
+            -Dsonar.c.file.suffixes=-
+            -Dsonar.cpp.file.suffixes=-
+            -Dsonar.objc.file.suffixes=-
+
+
+         
   cpp-check:
     name: Cppcheck Scan
     runs-on: ubuntu-latest

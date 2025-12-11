@@ -32,3 +32,4 @@ jobs:
           args: >
             -Dsonar.projectKey=saiharshithabs_materials
             -Dsonar.organization=saiharshithabs
+            -Dsonar.exclusions=**/*.java

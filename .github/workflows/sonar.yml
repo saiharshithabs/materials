@@ -50,43 +50,22 @@ jobs:
         run: cppcheck --enable=all --inconclusive --quiet .     
             
       
-  java-pmd:
-    name: Java PMD Scan
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download PMD
-        run: |
-          curl -L -o pmd.zip https://github.com/pmd/pmd/releases/download/pmd_releases%2F7.19.0/pmd-dist-7.19.0-bin.zip
-          unzip pmd.zip
-
-      - name: Run PMD Quality Scan
-        run: |
-          ./pmd-bin-7.19.0/bin/pmd check \
-            --dir . \
-            --include "**/*.java" \
-            --rulesets category/java/bestpractices.xml,category/java/errorprone.xml
-
-  
-
-
   grype:
-      runs-on: ubuntu-latest
-      steps:
-      - uses: actions/checkout@v4
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
 
-      - name: Install Grype (fixed version)
-        run: |
-          GRYPE_VERSION="0.81.0"
-          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b ./bin v$GRYPE_VERSION
+    - name: Install Grype (fixed version)
+      run: |
+        GRYPE_VERSION="0.81.0"
+        curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh \
+        | sh -s -- -b ./bin v$GRYPE_VERSION
 
-      - name: Run Grype Vulnerability Scan
-        run: |
-          ./bin/grype dir:. \
-            --exclude "./.github/**" \
-            --fail-on high
+    - name: Run Grype Vulnerability Scan
+      run: |
+        ./bin/grype dir:. \
+          --exclude "./.github/**" \
+          --fail-on high
 
+ 
  

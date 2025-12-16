@@ -49,13 +49,16 @@ jobs:
       - name: Run Cppcheck
         run: cppcheck --enable=all --inconclusive --quiet .     
             
-      
+            
   grype:
+    name: Grype Vulnerability Scan
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
 
-    - name: Install Grype (fixed version)
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Grype (fixed stable version)
       run: |
         GRYPE_VERSION="0.81.0"
         curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh \
@@ -66,6 +69,7 @@ jobs:
         ./bin/grype dir:. \
           --exclude "./.github/**" \
           --fail-on high
+
 
  
  
